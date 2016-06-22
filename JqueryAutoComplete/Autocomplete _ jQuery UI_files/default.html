@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)https://jqueryui.com/resources/demos/autocomplete/default.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>jQuery UI Autocomplete - Default functionality</title>
+	<link rel="stylesheet" href="./jquery-ui.css">
+	<script src="./jquery-1.10.2.js"></script><style type="text/css"></style>
+	<script src="./jquery-ui.js"></script>
+	<link rel="stylesheet" href="./style(1).css">
+	<script>
+	$(function() {
+		var availableTags = [
+			"ActionScript",
+			"AppleScript",
+			"Asp",
+			"BASIC",
+			"C",
+			"C++",
+			"Clojure",
+			"COBOL",
+			"ColdFusion",
+			"Erlang",
+			"Fortran",
+			"Groovy",
+			"Haskell",
+			"Java",
+			"JavaScript",
+			"Lisp",
+			"Perl",
+			"PHP",
+			"Python",
+			"Ruby",
+			"Scala",
+			"Scheme"
+		];
+		$( "#tags" ).autocomplete({
+			source: availableTags
+		});
+	});
+	</script>
+</head>
+<body>
+
+<div class="ui-widget">
+	<label for="tags">Tags: </label>
+	<input id="tags" class="ui-autocomplete-input" autocomplete="off">
+</div>
+
+
+
+
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none; top: 27px; left: 44px; width: 157px;"><li class="ui-menu-item" id="ui-id-35" tabindex="-1">Python</li></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"><div style="display: none;">3 results are available, use up and down arrow keys to navigate.</div><div style="display: none;">9 results are available, use up and down arrow keys to navigate.</div><div style="display: none;">1 result is available, use up and down arrow keys to navigate.</div><div style="display: none;">No search results.</div><div style="display: none;">3 results are available, use up and down arrow keys to navigate.</div><div style="display: none;">Clojure</div><div style="display: none;">No search results.</div><div style="display: none;">No search results.</div><div style="display: none;">8 results are available, use up and down arrow keys to navigate.</div><div style="display: none;">1 result is available, use up and down arrow keys to navigate.</div><div style="display: none;">8 results are available, use up and down arrow keys to navigate.</div><div>1 result is available, use up and down arrow keys to navigate.</div></span></body></html>

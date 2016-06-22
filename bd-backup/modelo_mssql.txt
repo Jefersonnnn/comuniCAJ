@@ -1,0 +1,45 @@
+idbairro,nome,aid
+1,Rio Bonito,rio-bonito
+2,Dona Francisca,dona-francisca
+3,Pirabeiraba Centro,pirabeiraba-cidade
+4,Zona Industrial Norte,z-ind-norte
+5,Jardim Sofia,j-sofia
+6,Jardim Paraiso,j-paraiso
+7,Costa e Silva,c-silva
+8,Vila Nova,vila-nova
+9,Vila Cubatao,vila-cubatao
+10,Itinga,itinga
+11,Santa Catarina,santa-catarina
+12,Morro do Meio,morro-meio
+13,Nova Brasilia,nova-brasilia
+14,Floresta,floresta
+15,Sao Marcos,sao-marcos
+16,Zona Tupy,z-tupy
+17,Comasa,comasa
+18,Bom Retiro,bom-retiro
+19,Santo Antonio,santo-antonio
+20,America,america
+21,Gloria,gloria
+22,Boehmerwald,boehmerwald
+23,Parque Guarani,parque-guarani
+24,Paranaguamirim,paranaguamirim
+25,Aventureiro,aventureiro
+26,Espinheiros,espinheiros
+27,Petropolis,petropolis
+28,Jardim Iririu,j-iririu
+29,Ulysses Guimaraes,ulysses-guimaraes
+30,Adhemar  Garcia,adhemar-garcia
+31,Boa Vista,boa-vista
+32,Iririu,iririu
+33,Saguacu,saguacu
+34,Jarivatuba,jarivatuba
+35,Itaum,itaum
+36,Fatima,fatima
+37,Guanabara,guanabara
+38,Bucarein,bucarein
+39,Anita Garibaldi,anita-garibaldi
+40,Atiradores,atiradores
+41,Centro,centro
+42,Profipo,profipo
+43,Joao Costa,joao-costa
+44,teste,teste
