@@ -2,7 +2,8 @@
 header('Content-Type: application/json');
 require 'conexao/conexao.php';
 
-$aid = $mysqli->real_escape_string($_GET["aid"]);
+//$aid = $mysqli->real_escape_string($_GET["aid"]);
+$aid = $_GET["aid"];
 
 $result = $mysqli->query("SELECT b.nome, s.descricao, s.dataIni, s.dataFim 
 	FROM statusCidade s, bairro b 
@@ -20,6 +21,7 @@ $desc = $row['descricao'];
 $desc = str_replace("\n", " ", $desc);
 
 ?>
+
 {
   "nome":"<?php echo $row['nome']; ?>",
   "descricao":"<?php echo $desc; ?>",

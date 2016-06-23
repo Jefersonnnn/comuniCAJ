@@ -60,23 +60,27 @@ if($t =  mysqli_fetch_assoc($total)){
         return $dataReturn;
         }
     }
+    
+    
 	
     while($d = mysqli_fetch_assoc($dados)){
+        
 		$titulo = $d['nome'];
         $desc   = $d['descricao'];
 			
         $dataI = formataData($d['dataIni']); 
         $dataF = formataData($d['dataFim']);
 
-		$saida .= "<table border='0'><tr><th colspan='2'> $titulo </th></tr>";
-		
+		$saida .= "<table class='tabela' border='0'><tr><th colspan='2'> $titulo </th></tr>";
         $saida .="<tr ><td colspan='2'><b>Descricao:</b> <label>"  .$desc.    "</label></td></tr>";		
 		$saida .="<tr ><td colspan='2'><b>Inicio:</b>    <label>"  .$dataI.             "</label></td></tr>";	
 		$saida .="<tr ><td colspan='2'><b>Estimativa de retorno:</b>       <label>"  .$dataF.             "</label></td></tr>";	
         $saida .="<tr>_____________________________________</tr>";
 		$saida .= "<tr>";
-
+	
 	}	
+	
+	
   	
 	
 	

@@ -8,7 +8,6 @@ if (isset($_GET['func']) == true) {
 	$func = $mysqli->real_escape_string($_GET['func']);
 
 	if($func == 'estiloMapaProgramado'){
-
 		
 		$result = $mysqli->query("SELECT b.aid, c.classe 
 			FROM statusCidadeProgramado s, bairro b, classe c 
@@ -42,6 +41,7 @@ for($i = 0; $i<$n; $i++) {
 }
 
 echo json_encode($dados);
+
 }
 
 ?>

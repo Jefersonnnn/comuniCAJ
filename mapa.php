@@ -1,7 +1,5 @@
 <!-- SVG DO MAPA DE JOINVILLE DIVIDIDO POR BAIRROS -->
 
-
-
 <div id="mapa-escolha">
           <nav>
             <fieldset>
