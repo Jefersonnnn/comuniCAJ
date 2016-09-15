@@ -1,4 +1,10 @@
 <?php
+
+//Proteger arquivo de acesso direto
+include("../seguranca/seguranca.php");
+protegePagina();
+
+
 //Variavel para retornar mensagem ao usuario
 $resposta = "";
 
@@ -11,15 +17,12 @@ if (isset($_GET['id']) == true){
 require '../conexao/conexao.php';
 
 //Tenta inserir o usuario no banco de dados
-if (!$result = $mysqli->query("DELETE FROM usuario WHERE idUsuario = '$id'")) 
+if (!$result = $db->query("DELETE FROM usuario WHERE idUsuario = '$id'")) 
 {
     var_dump($mysqli);
 }else{
     $resposta = "SUCESSO! Usuario Deletado";
 }
-
-//Fecha a conexão
-$mysqli->close();
 
 
  #abaixo, criamos uma variavel que terá como conteúdo o endereço para onde haverá o redirecionamento:  

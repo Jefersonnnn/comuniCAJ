@@ -13,7 +13,7 @@
           </nav>
 </div>
 
-<?xml version="1.0" encoding="utf-8"?>
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"

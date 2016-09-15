@@ -1,7 +1,6 @@
 var CTRL = 0;
 var vetorBairro = new Array();
 
-
 //Verifica se a tecla CTRL foi precionada.. caso sim funcao de selecionar varios bairros funciona.
 $(window).keydown(function(e) {
   if (e.ctrlKey) {
@@ -47,6 +46,7 @@ function pathclick(evt) {
   tag.setAttribute("class", valor);
 
   if (estilo_mapa == 1) {
+
     $.get("config/update_query.php", {
       aid: tag.id,
       classe: valor,
@@ -71,7 +71,6 @@ function pathclick(evt) {
       "aid": tag.id
     },
     success: function(data) {
-      console.log("get_regioes");
       document.getElementById('data_ini').value = data['data_ini'];
       document.getElementById('descricao').value = data['descricao'];
       document.getElementById('data_fim').value = data['data_fim'];
@@ -101,34 +100,35 @@ function mudaEstiloMapaNormal() {
 
       $("#carregando").hide();
 
-      var quebra;
-      $(data).each(function(key, value) {
-        quebra = value.toString().split(",");
-        document.getElementById(quebra[0]).setAttribute('class', quebra[1]);
-      })
+      for (var i = 0; i < data.length; i++) {
+        if (document.getElementById(data[i].aid) != null) {
+          document.getElementById(data[i].aid).setAttribute('class', data[i].classe);
+        }
+      }
     }
   })
 
 }
 
 //Função para limpar o formulario da área administrativa para edição do Bairro.
-function limpaBairro(evt){
-    document.getElementById('data_ini').value = "";
-    document.getElementById('descricao').value = "";
-    document.getElementById('data_fim').value = "";
-    document.getElementById('aid').innerHTML = "";
+function limpaBairro(evt) {
+  document.getElementById('data_ini').value = "";
+  document.getElementById('descricao').value = "";
+  document.getElementById('data_fim').value = "";
+  document.getElementById('aid').innerHTML = "";
 }
 
 
 //Metodo para adicionar novo usuario
 //Pega as informações inseridas nos campos e atribui as variaveis.
 //Chamando o arquivo cadastro/cad_usuario.php e passando as informações.
-function cadastraUsuario(){
-  
+function cadastraUsuario() {
+
   var un = document.getElementById('user_user').value;
   var nome = document.getElementById('nome_user').value;
   var pw = document.getElementById('pass_user').value;
   var email = document.getElementById('email_user').value;
+  var telefone = document.getElementById('telefone_user').value;
 
   $.ajax({
     dataType: "json",
@@ -138,7 +138,8 @@ function cadastraUsuario(){
       "un": un,
       "email": email,
       "nome": nome,
-      "pw": pw
+      "pw": pw,
+      "telefone": telefone
     },
     success: function(r) {
       alert(r['RESPOSTA']);
@@ -146,100 +147,108 @@ function cadastraUsuario(){
 
     }
   })
-  
+
 }
 
-function atualizaBairro(){
-  
+function atualizaBairro() {
+
   var data_ini = document.getElementById('data_ini').value,
-      descricao  = document.getElementById('descricao').value,
-      data_fim   = document.getElementById('data_fim').value,
-      aid        = document.getElementById('aid').innerHTML;
+    descricao = document.getElementById('descricao').value,
+    data_fim = document.getElementById('data_fim').value,
+    aid = document.getElementById('aid').innerHTML;
 
-    if (data_ini == "" || data_fim == "") {
-      alert("Verifique as datas digitadas!");
-      exit;
-    };
-    if (aid === '') {
-      alert("Selecione um bairro!");
-      exit;
-    };
-    if (descricao === '') {
-      alert("descricao Vazia");
-      exit;
-    };
+  if (data_ini == "" || data_fim == "") {
+    alert("Verifique as datas digitadas!");
+    exit;
+  };
+  if (aid === '') {
+    alert("Selecione um bairro!");
+    exit;
+  };
+  if (descricao === '') {
+    alert("descricao Vazia");
+    exit;
+  };
 
-    if (estilo_mapa == 0) {
+  if (estilo_mapa == 0) {
 
-      $.ajax({
-        dataType: "json",
-        type: "GET",
-        url: "config/update_query.php",
-        data: {
-          "aid": aid,
-          "desc": descricao,
-          "data_i": data_ini,
-          "data_f": data_fim,
-          "func": "atualiza_desc"
-        },
-        success: function(resp) {
-          alert(resp['RESPOSTA']);
-        },
-        error: function() {
-          alert("ERROR");
-        }
+    $.ajax({
+      dataType: "json",
+      type: "GET",
+      url: "config/update_query.php",
+      data: {
+        "aid": aid,
+        "desc": descricao,
+        "data_i": data_ini,
+        "data_f": data_fim,
+        "func": "atualiza_desc"
+      },
+      success: function(resp) {
+        alert(resp['RESPOSTA']);
+      },
+      error: function() {
+        alert("ERROR");
+      }
 
-      });
-    }
+    });
+  }
 }
 
 
 //Muda o mapa exibido para o mapa programado.
-function visualizaMapaProgramado(){
-  
-  $('#resultado').slideUp('slow');
-    $('#parada_prog_adm').slideDown('slow');
+function visualizaMapaProgramado() {
 
-    document.getElementById('visualiza-mapa-normal').className = 'desactive';
-    document.getElementById('visualiza-programado').className = 'active';
-    
-    estilo_mapa = 1;
-    
-    if (estilo_mapa == 1) {
-      $.ajax({
-        dataType: "json",
-        type: "GET",
-        url: "config/cadastro/setmapa.php",
-        data: {
-          "func": "estiloMapaProgramado"
-        },
-        beforeSend: function() {
-          $("#mapa").hide();
-          $("#carregando").show();
-        },
-        success: function(data) {
-          $("#mapa").show("slow");
-          $("#carregando").hide();
-          var quebra;
-          $(data).each(function(key, value) {
-            quebra = value.toString().split(",");
-            document.getElementById(quebra[0]).setAttribute('class', quebra[1]);
-          })
+  $('#resultado').slideUp('slow');
+  $('#parada_prog_adm').slideDown('slow');
+
+  document.getElementById('visualiza-mapa-normal').className = 'desactive';
+  document.getElementById('visualiza-programado').className = 'active';
+
+  estilo_mapa = 1;
+
+  if (estilo_mapa == 1) {
+    $.ajax({
+      dataType: "json",
+      type: "GET",
+      url: "config/cadastro/setmapa.php",
+      data: {
+        "func": "estiloMapaProgramado"
+      },
+      beforeSend: function() {
+        $("#mapa").hide();
+        $("#carregando").show();
+      },
+      success: function(data) {
+        $("#mapa").show("slow");
+        $("#carregando").hide();
+
+
+        for (var i = 0; i < data.length; i++) {
+
+          document.getElementById(data[i].aid).setAttribute('class', data[i].classe);
         }
-      })
-    }
+
+      }
+    })
+  }
 }
 
 
 //Muda o mapa exibido para o mapa normal (O mapa usado para exibição dos problemas do dia).
-function visualizaMapaNormal(){
+function visualizaMapaNormal() {
+
+  $('#parada_prog_adm').slideUp('slow');
+  $('#resultado').slideDown('slow');
+  mudaEstiloMapaNormal();
   
-   $('#parada_prog_adm').slideUp('slow');
-    $('#resultado').slideDown('slow');
-    mudaEstiloMapaNormal();
+  if(document.getElementById('visualiza-mapa-normal') != null){
     document.getElementById('visualiza-mapa-normal').className = 'active';
-    document.getElementById('visualiza-programado').className = 'desactive';
+  }
   
+  if(document.getElementById('visualiza-programado') != null){
+    document.getElementById('visualiza-programado').className = 'desactive';
+  }
+
 }
 
 //Faz logOut do sistema

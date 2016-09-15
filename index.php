@@ -1,3 +1,11 @@
+<?php
+
+  include 'adm/config/seguranca/mostra_erros.php';
+  
+?>
+
+
+
 <!DOCTYPE HTML>
 
 <html>
@@ -20,7 +28,7 @@
         <nav id="nav-3">
         <a class="link-3" href="?inicio">Home</a>
         <a class="link-3" href="/adm">Administração</a>
-        <a class="link-3" href="contato">Contato</a>
+        <a class="link-3" href="?contato">Contato</a>
       </nav>
 
       </div>
@@ -58,7 +66,9 @@
 
           <div id="resultado">
             <h1>Regiões afetadas</h1>
-            <?php include "config/regioes_afetadas_user.php" ?>
+            <?php 
+            clearstatcache();
+            include "config/regioes_afetadas_user.php" ?>
 
           </div>
 

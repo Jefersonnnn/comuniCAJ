@@ -3,6 +3,10 @@ var timer; //Variavel tempo para atualizar o site
 
 //Funcao para mostrar tooltop com informações do local selecionado. (ao passar o mouse)
 
+ comecarReload();
+ mudaEstiloMapaNormal();
+
+
 function getRegioes(jsonArr) {
 
   $.ajax({
@@ -47,19 +51,19 @@ function mudaEstiloMapaNormal() {
       $("#carregando").hide();
       $("#parada_prog").slideUp('slow');
       $("#resultado").slideDown('slow');
+      
+      for(var i = 0; i < data.length ; i++){
 
-      var quebra;
-      $(data).each(function(key, value) { //Atribui o resultado [["rio-bonito","alert"],["dona-francisca","alert"],
-        //Atribui no quebra[0] = rio-bonito; quebra[1] = status [alert][normal] 
-        quebra = value.toString().split(",");
-        document.getElementById(quebra[0]).setAttribute('class', quebra[1]);
-
-      })
+        if( document.getElementById(data[i].aid) != null){
+          
+           document.getElementById(data[i].aid).setAttribute('class', data[i].classe);
+         
+        }
+      }
     }
   })
 }
 
-mudaEstiloMapaNormal();
 
 
 $('#visualiza-programado').click(
@@ -81,18 +85,17 @@ $('#visualiza-programado').click(
         type: "GET",
         url: "config/get_parada.php",
         success: function(data) {
+          
          var now = new Date();
-         //15/12/2016 12:00:00
-         var diaHoje = now.getDate() + "/" + now.getMonth() + "/" + now.getFullYear();
-        
-        if(data['data'] > diaHoje) { //Verifica se a Data recebida é menor que a data Atual.
+
+         var dataProgramada = new Date(data.data);
+ 
+        if(dataProgramada > now) { //Verifica se a Data recebida é menor que a data Atual.Boolean
+          document.getElementById('data-programado').innerHTML = "Data: " + dataProgramada.getFullYear();
+          document.getElementById('descricao-programado').innerHTML = data.descricao;
           
-          document.getElementById('data-programado').innerHTML = "Data: " + data['data'];
-          document.getElementById('descricao-programado').innerHTML = data['descricao'];
         }else{
-        //alert(data['data']);
-          
-          
+  
           document.getElementById('data-programado').innerHTML = "SEM PROGRAMAÇÃO";
           document.getElementById('descricao-programado').innerHTML = "";
         }
@@ -114,13 +117,10 @@ $('#visualiza-programado').click(
         success: function(data) {
           $("#mapa").show("fast");
           $("#carregando").hide();
-          var quebra;
-          $(data).each(function(key, value) {
-            quebra = value.toString().split(",");
-            document.getElementById(quebra[0]).setAttribute('class', quebra[1]);
-          })
-
-
+          
+          for(var i = 0; i< data.length; i++){
+            document.getElementById(data[i].aid).setAttribute('class', data[i].classe);
+          }
         }
       })
 
@@ -138,70 +138,15 @@ $('#visualiza-programado').click(
         }
       )
 
-
-
-      //Funcao para atualizar a pagina
-      function comecarReload() {
-        timer = window.setTimeout("location.reload()", 60 * 10000); //60 * 10000 = 10m
-      }
-
-      comecarReload();
+     
     }
   });
 
 
 
-
-/**
- *  adm/index.php
- * */
- 
-$('#usuario').click(
-  function() {
-    if ($(this).val() == 'usuario') {
-      $(this).val('');
-    }
-  }
-);
-
-$('#senha').click(
-  function() {
-    if ($(this).val() == 'senha') {
-      $(this).val('');
-    }
-  }
-);
-
-$('#botao').click(
-  function() {
-
-    $('#msg').click();
-
-    if ($('#usuario').val() == '' || $('#usuario').val() == 'usuario') {
-      document.getElementById('botao').type = "button";
-      $('#msg').html('Senha/Usuario invalida');
-      $('#msg').slideDown('slow');
-
-    }
-    else if ($('senha').val() == '' || $('senha').val() == 'senha') {
-      document.getElementById('botao').type = "button";
-      $('#msg').html('Senha/Usuario invalida').slideDown('slow');
-    }
-    else {
-      document.getElementById('botao').type = "submit";
-    }
-
-  }
-)
-
-$('#msg').click(
-  function() {
-    $(this).slideUp('fast');
-  }
-)
-
-
-
-
+//Funcao para atualizar a pagina
+function comecarReload() {
+  timer = window.setTimeout("location.reload()", 60 * 5000); //60 * 5000 = 5m
+}
 
 

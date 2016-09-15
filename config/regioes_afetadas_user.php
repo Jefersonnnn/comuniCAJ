@@ -1,25 +1,23 @@
 <?php
+if(file_exists("adm/config/conexao/conexao.php")){
+    
 	require 'adm/config/conexao/conexao.php';
-	
-		
-if ($mysqli->connect_errno) {
-    echo "Sorry, this website is experiencing problems.";
-    echo "Error: Failed to make a MySQL connection, here is why: \n";
-    echo "Errno: " . $mysqli->connect_errno . "\n";
-    echo "Error: " . $mysqli->connect_error . "\n";
-    exit;
+}else {
+    require 'config/conexao/conexao.php';
 }
 
-//$total = $mysqli->query("SELECT count(aid) as classes from cidade WHERE classe = 'alert' ");
+clearstatcache();
+	
+$total = $db->query("SELECT count(idBairro) as idBairro from statusCidade WHERE idClasse = 2 ");
 
-$total = $mysqli->query("SELECT count(idBairro) as idBairro from statusCidade WHERE idClasse = 2 ");
 
 /*Se encontrou o total*/
-if($t =  mysqli_fetch_assoc($total)){
+
+if($t = $total->fetch(PDO::FETCH_ASSOC)){
 
     // Total de regstros
-    $n = $t['idBairro'];
-	
+    $n = (int) $t['idBairro'];
+
     // Limite máximo de registros por página
     $limite = 5;
     /*
@@ -28,13 +26,14 @@ if($t =  mysqli_fetch_assoc($total)){
      * Esta quantidade é obtida dividindo-se o total de registros pelo limite por página
      * */
     $paginas = round($n / $limite);
-	
+
     /*Caso, na requisição, nenhuma página for especificada, será usada o valor padrão 1. Ou seja, obrigatoriamente estará na primeira página*/
     $pagina = empty($_REQUEST['pagina'])?1:$_REQUEST['pagina'];
 
     /*Com base na página, é definido o registro de início para fazer a consulta*/
     $inicio = ($pagina - 1) * $limite;
-	
+    
+
 	$sql = "SELECT b.nome, s.descricao, s.dataIni, s.dataFim 
 	        FROM statusCidade s, bairro b 
 	        WHERE s.idBairro = b.idBairro AND idClasse = 2 
@@ -43,7 +42,7 @@ if($t =  mysqli_fetch_assoc($total)){
 
 	/*Fazendo a consulta */
 
-    $dados = $mysqli->query($sql);
+    $dados = $db->query($sql);
 
     /*Montando a apresentação*/
 	
@@ -66,8 +65,10 @@ if($t =  mysqli_fetch_assoc($total)){
     }
     
     
+
+    
 	
-    while($d = mysqli_fetch_assoc($dados)){
+    while($d = $dados->fetch(PDO::FETCH_ASSOC)){
         
 		$titulo = $d['nome'];
         $desc   = $d['descricao'];
@@ -96,13 +97,13 @@ if($t =  mysqli_fetch_assoc($total)){
      
     /*Caso a página não tenha chegado na última, haverá um link para a próxima página*/
 
-    if($pagina -1 > 0){
+    if($pagina > 1){
         $saida .= "<td><a href='?pagina=" . ($pagina - 1 ) . "'>Anterior</a></td>";
     }else{
         //$saida .= "<td>Primeira</td>";
     }
 
-    if($pagina < $paginas){
+    if($pagina - 1 < $paginas){
         $saida .= "<td><a href='?pagina=".( $pagina + 1) ."'>Próxima</a></td>";
     }else{
         //$saida .= "<td>última</td>";
@@ -114,6 +115,7 @@ if($t =  mysqli_fetch_assoc($total)){
      * Caso voçê queira uma paginação diferente, tipo, em que o usuário pode selecionar uma determinada página diretamente, é só comentar o trecho do rodapé acima e descomentar o trecho abaixo
      * */
     /*-----------------------------------RODAPÉ---------------------------------*/
+    
     /*$saida .= "<td colspan='2'>";
     for($x=1;$x<=$paginas;$x++){
         $saida .= ($pagina == $x?" <b> ":" ")."<a href ='?pagina=$x'>".$x."</a>".($pagina == $x?" </b> ":" ");

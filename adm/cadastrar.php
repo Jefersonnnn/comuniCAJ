@@ -12,6 +12,7 @@
 				Nome:</br>
 				<input type="text" id="nome_user" />
 			</label>   
+			
 			<label><br>
 				Usuario:</br>
 				<input type="text" id="user_user" />
@@ -28,6 +29,12 @@
 				E-mail:</br>
 				<input type="email"  id="email_user"/>
 			</label></br>
+						<label>
+				Telefone:</br>
+				<input type="text" name="telefone" class="telefone" id="telefone_user" data-mask="(00) 0000-0000" data-mask-selectonfocus="true" />
+			</label></br>
+			
+			
 			<input type="button"  onClick="cadastraUsuario()" value="Cadastrar" />    
 
 		</form> 
@@ -54,7 +61,7 @@
 <tr>         
 <td class="tabela-usuario"><span>Nome</span></td>         
 <td class="tabela-usuario"><span>Login</span></td>    
-<td class="tabela-usuario"><span>Senha</span></td>
+<td class="tabela-usuario"><span>Telefone</span></td>
 <td class="tabela-usuario"><span>Excluir?</span></td>  
 
 
@@ -62,15 +69,17 @@
 
 <?php        
 include 'config/conexao/conexao.php';        
-$sql_visualizar = $mysqli->query("SELECT nome, userName, passWord, idUsuario FROM usuario");   
+$sql_visualizar = $db->query("SELECT nome, userName, telefone, idUsuario FROM usuario");   
 
-while ($usuario = mysqli_fetch_object($sql_visualizar)){ 
-echo "<tr>
-<td>$usuario->nome</td>
-<td>$usuario->userName</td>
-<td>$usuario->passWord</td>
-<td align=\"center\"><a href=\"config/cadastro/del_usuario.php?id={$usuario->idUsuario}\">Excluir</a></td></tr>"; 
+while ($usuario = $sql_visualizar->fetch(PDO::FETCH_ASSOC)){ 
+
+	echo "<tr>
+	<td>{$usuario['nome']}</td>
+	<td>{$usuario['userName']}</td>
+	<td>{$usuario['telefone']}</td>
+	<td align=\"center\"><a href=\"config/cadastro/del_usuario.php?id={$usuario['idUsuario']}\">Excluir</a></td></tr>"; 
 }
+
 ?>    
 
 </table>        

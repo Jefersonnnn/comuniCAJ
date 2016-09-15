@@ -6,6 +6,14 @@ var aberto = 0;
 
 window.onload = function() {
 	// códigos JavaScript a serem executados quando a página carregar
+
+jQuery(function($){
+   $("#date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
+   $("#telefone_user").mask("(99) 9999-9999");
+   $("#tin").mask("99-9999999");
+   $("#ssn").mask("999-99-9999");
+});
+	
 	var paths = document.querySelectorAll('path'),
       i = paths.length;
     for (; i--;) {

@@ -1,5 +1,30 @@
-<h1>Contato</h1>
+
+<h1>Contatos</h1>
 <br>
-<h3>Luanna (CCO) -</h3>
-<h3>Tel: 2105-1710</h3>
-<h3>Email: luanna.souza@aguasdejoinville.com.br</h3>
+
+
+<div id="list-usuarios">   
+<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="#A1DBFF">      
+<tr>         
+<td class="tabela-usuario"><span>Nome</span></td>         
+<td class="tabela-usuario"><span>Email</span></td>    
+<td class="tabela-usuario"><span>Telefone</span></td>
+
+</tr>            
+
+<?php        
+include 'adm/config/conexao/conexao.php';        
+$sql_visualizar = $db->query("SELECT nome, email, telefone, idUsuario FROM usuario");   
+
+while ($usuario = $sql_visualizar->fetch()){ 
+	echo "<tr>
+	<td bgcolor=\"#FFF\">{$usuario['nome']}</td>
+	<td bgcolor=\"#FFF\" width=\"250\"> <a href=\"mailto:{$usuario['email']}\" target=\"_top\">{$usuario['email']}</td>
+	<td bgcolor=\"#FFF\" width=\"100\">{$usuario['telefone']}</td>";
+	
+}
+
+?>    
+
+</table>        
+</div>

@@ -1,4 +1,9 @@
 <?php
+
+//Proteger arquivo de acesso direto
+include("seguranca/seguranca.php");
+protegePagina();
+
 $resposta = "";
 
 
@@ -55,7 +60,7 @@ if($func == "atualiza_cor"){
         $resposta = "SEM INFORMAÇÕES";
         
     }else{
-        if (!$result = $mysqli->query("UPDATE statusCidade as s, bairro as b 
+        if (!$result = $db->query("UPDATE statusCidade as s, bairro as b 
                                     SET s.idClasse = '" . $classe . "' 
                                     WHERE s.idBairro = b.idBairro AND b.aid = '" . $aid . "'"))
         {
@@ -71,7 +76,7 @@ if($func == "atualiza_cor"){
 * 2 = Alerta
 */
 if($func == "atualiza_cor_parada"){
-    if (!$result = $mysqli->query("UPDATE statusCidadeProgramado S, bairro B 
+    if (!$result = $db->query("UPDATE statusCidadeProgramado S, bairro B 
                                SET S.idClasse = '" . $classe . "' 
                                WHERE S.idBairro = B.idBairro AND B.aid = '" . $aid . "'")) 
     {
@@ -90,10 +95,8 @@ if($func == "atualiza_desc"){
 
 try{
     foreach ($bairros as $value) {
-        /*$mysqli->query("INSERT INTO historicoCidade (descricao, dataIni, dataFim, idBairro, idClasse) 
-                            VALUES ('$desc', '$data_i', '$data_f', '$value', '2')");*/
 
-        $mysqli->query("UPDATE statusCidade S, bairro B SET S.dataIni  = '" . $data_i    .    "',
+        $db->query("UPDATE statusCidade S, bairro B SET S.dataIni  = '" . $data_i    .    "',
                                                  S.dataFim  = '" . $data_f    .    "',
                                                  S.descricao = '" . $desc .    "'
                                                  WHERE S.idBairro = B.idBairro AND B.aid = '" . $value . "'");
@@ -101,8 +104,8 @@ try{
     
     $resposta = "Atualizado!";
 
-    }catch(\Exception $e){
-        $resposta = ($e->getMessage());
+    }catch(Exception $e){
+    $resposta = ("ERRO!. Ao tentar atualizar");
     }
 }
 
@@ -112,7 +115,7 @@ if($func == "atualiza_parada"){
 
     $desc = trim($desc);
 
-    if (!$result = $mysqli->query("UPDATE statusCidadeProgramado S
+    if (!$result = $db->query("UPDATE statusCidadeProgramado S
                                SET descricao = '" . $desc   . "',
                                    dataIni  = '" . $data_i . "'
                                WHERE idStatusCidadeProgramado = 1")) 
@@ -124,10 +127,6 @@ if($func == "atualiza_parada"){
     }   
 
 }
-
-
-//Fecha a conexão
-$mysqli->close();
 
 
 //Verifica se existe uma resposta

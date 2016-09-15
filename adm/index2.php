@@ -1,15 +1,15 @@
 <?php 
   include("config/seguranca/seguranca.php");
-
   protegePagina();
+  include("config/seguranca/mostra_erros.php");
 ?>
-
 <!DOCTYPE HTML>
 
 <html>
 <head>
   <link rel="stylesheet" href="../css/styles.css" type="text/css" />
   <link rel="stylesheet" href="../css/styles_adm.css" type="text/css"/>
+  
 
 
   <meta charset="utf-8">
@@ -40,7 +40,7 @@
         }else if(isset($_GET['contato'])){
           include("../contato.php");
         }else if(isset($_GET['inicio'])){
-          include("inicio.php");
+          include("../mapa.php");
         }else{echo "Pagina não encontrada!";}
         ?>   
 
@@ -70,7 +70,7 @@
         <h1>Regiões afetadas</h1>  
         <?php if(isset($_GET['mapa'])){ 
          include("config/regioes_afetadas_adm.php");
-        }else{include("inicio.php");}
+        }else{include("../config/regioes_afetadas_user.php");}
         ?>           
         
       </div>
@@ -90,6 +90,7 @@
           <script src="../js/jquery-2.1.4.min.js"></script>
           <script src="config/js/functions.js"></script>
           <script src="config/js/initial.js"></script>
+          <script src="config/js/jquery.maskedinput.js"></script>
 
 </body>
 </html>

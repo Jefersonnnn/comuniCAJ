@@ -1,5 +1,9 @@
 <?php
 
+//Proteger arquivo de acesso direto
+include("seguranca/seguranca.php");
+protegePagina();
+
 /*
 * Retorna o bairro (aid) com as seguintes informações para edição.
 * nome, descricao, data de inicio previsto, data de fim previsto.
@@ -12,14 +16,11 @@ require 'conexao/conexao.php';
 //$aid = $mysqli->real_escape_string($_GET["aid"]);
 $aid = $_GET["aid"];
 
-$result = $mysqli->query("SELECT b.nome, s.descricao, s.dataIni, s.dataFim 
-	FROM statusCidade s, bairro b 
-	WHERE s.idBairro = b.idBairro AND b.aid = ('$aid')") or die("Erro na conexão!");  
+$result = $db->query("SELECT b.nome, s.descricao, s.dataIni, s.dataFim 
+                  	FROM statusCidade s, bairro b 
+	                  WHERE s.idBairro = b.idBairro AND b.aid = ('$aid')") or die("Erro na conexão!");  
 
-$row = $result->fetch_array();
-
-$result->free();
-$mysqli->close();
+$row = $result->fetch(PDO::FETCH_BOTH);
 
 $desc = $row['descricao'];
 $desc = str_replace("\n", " ", $desc);

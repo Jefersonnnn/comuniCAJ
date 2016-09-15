@@ -1,3 +1,2 @@
-Options -Indexes
 php_value session.cookie_httponly 1
 php_value session.cookie_secure 1

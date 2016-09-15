@@ -1,7 +1,9 @@
 <?php 
 	//Inclui arquivo com sistema de segurança
 	require_once("seguranca.php");
-
+	
+	protegePagina();
+	
 	//Verifica se um formulario foi enviado;
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		//Salva duas variaveis com o que foi digitado no forumulario

@@ -5,15 +5,11 @@ require '../adm/config/conexao/conexao.php';
 
 //Consulta com banco de dados para selecionar a "Parada de ETA programada"
 //p.idstatusCidadeProgramado = 1 pois esta na primeira linha a descricao da "Parada programada"
-$result = $mysqli->query("SELECT p.idStatusCidadeProgramado, p.idBairro, p.dataIni, p.descricao, b.nome
+$result = $db->query("SELECT p.idStatusCidadeProgramado, p.idBairro, p.dataIni, p.descricao, b.nome
                           FROM statusCidadeProgramado p, bairro b
                           WHERE p.idStatusCidadeProgramado = b.idBairro AND p.idStatusCidadeProgramado = 1");
 
-$row = $result->fetch_array();
-
-$result->free();
-$mysqli->close();
-
+$row = $result->fetch(PDO::FETCH_BOTH);
 
 //Formata a data que esta salva no banco de dados para o padrão d/m/ano H:m:s
 function formataData($data){
@@ -35,7 +31,7 @@ $desc = str_replace("\n", "</br>", $desc);
 
 ?>
 {
-  "data": "<?php echo formataData($row['dataIni']); ?>",
+  "data": "<?php echo $row['dataIni'] /*formataData($row['dataIni']);*/ ?>",
   "descricao": "<?php echo $desc ?>", 
   "bairro:": "<?php echo $row['nome']; ?>"
 }
